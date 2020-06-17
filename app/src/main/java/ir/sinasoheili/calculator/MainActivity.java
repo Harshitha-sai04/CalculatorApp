@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_plus ;
     private Button btn_subtract ;
 
+    private double num1 = 0;
+    private double num2 = 0;
+    private char operator = '$';
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -95,67 +99,158 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         if(v.equals(btn_clear))
         {
-            Log.i("tag" , btn_clear.getText().toString()+" :: "+btn_clear.getId());
+//            Log.i("tag" , btn_clear.getText().toString()+" :: "+btn_clear.getId());
+            clear();
         }
         else if(v.equals(btn_one))
         {
-            Log.i("tag" , btn_one.getText().toString()+" :: "+btn_one.getId());
+//            Log.i("tag" , btn_one.getText().toString()+" :: "+btn_one.getId());
+            set_number(Double.parseDouble(btn_one.getText().toString()));
         }
         else if(v.equals(btn_two))
         {
-            Log.i("tag" , btn_two.getText().toString()+" :: "+btn_two.getId());
+//            Log.i("tag" , btn_two.getText().toString()+" :: "+btn_two.getId());
+            set_number(Double.parseDouble(btn_two.getText().toString()));
         }
         else if(v.equals(btn_three))
         {
-            Log.i("tag" , btn_three.getText().toString()+" :: "+btn_three.getId());
+//            Log.i("tag" , btn_three.getText().toString()+" :: "+btn_three.getId());
+            set_number(Double.parseDouble(btn_three.getText().toString()));
         }
         else if(v.equals(btn_four))
         {
-            Log.i("tag" , btn_four.getText().toString()+" :: "+btn_four.getId());
+//            Log.i("tag" , btn_four.getText().toString()+" :: "+btn_four.getId());
+            set_number(Double.parseDouble(btn_four.getText().toString()));
         }
         else if(v.equals(btn_five))
         {
-            Log.i("tag" , btn_five.getText().toString()+" :: "+btn_five.getId());
+//            Log.i("tag" , btn_five.getText().toString()+" :: "+btn_five.getId());
+            set_number(Double.parseDouble(btn_five.getText().toString()));
         }
         else if(v.equals(btn_six))
         {
-            Log.i("tag" , btn_six.getText().toString()+" :: "+btn_six.getId());
+//            Log.i("tag" , btn_six.getText().toString()+" :: "+btn_six.getId());
+            set_number(Double.parseDouble(btn_six.getText().toString()));
         }
         else if(v.equals(btn_seven))
         {
-            Log.i("tag" , btn_seven.getText().toString()+" :: "+btn_seven.getId());
+//            Log.i("tag" , btn_seven.getText().toString()+" :: "+btn_seven.getId());
+            set_number(Double.parseDouble(btn_seven.getText().toString()));
         }
         else if(v.equals(btn_eight))
         {
-            Log.i("tag" , btn_eight.getText().toString()+" :: "+btn_eight.getId());
+//            Log.i("tag" , btn_eight.getText().toString()+" :: "+btn_eight.getId());
+            set_number(Double.parseDouble(btn_eight.getText().toString()));
         }
         else if(v.equals(btn_nine))
         {
-            Log.i("tag" , btn_nine.getText().toString()+" :: "+btn_nine.getId());
+//            Log.i("tag" , btn_nine.getText().toString()+" :: "+btn_nine.getId());
+            set_number(Double.parseDouble(btn_nine.getText().toString()));
         }
         else if(v.equals(btn_zero))
         {
-            Log.i("tag" , btn_zero.getText().toString()+" :: "+btn_zero.getId());
+//            Log.i("tag" , btn_zero.getText().toString()+" :: "+btn_zero.getId());
+            set_number(Double.parseDouble(btn_zero.getText().toString()));
         }
         else if(v.equals(btn_equal))
         {
-            Log.i("tag" , btn_equal.getText().toString()+" :: "+btn_equal.getId());
+//            Log.i("tag" , btn_equal.getText().toString()+" :: "+btn_equal.getId());
+            String result = calculate();
+            show_in_tv(result);
         }
         else if(v.equals(btn_multiplication))
         {
-            Log.i("tag" , btn_multiplication.getText().toString()+" :: "+btn_multiplication.getId());
+//            Log.i("tag" , btn_multiplication.getText().toString()+" :: "+btn_multiplication.getId());
+            num2 = 0;
+            set_operator(btn_multiplication.getText().toString().charAt(0));
         }
         else if(v.equals(btn_division))
         {
-            Log.i("tag" , btn_division.getText().toString()+" :: "+btn_division.getId());
+//            Log.i("tag" , btn_division.getText().toString()+" :: "+btn_division.getId());
+            num2 = 0;
+            set_operator(btn_division.getText().toString().charAt(0));
         }
         else if(v.equals(btn_plus))
         {
-            Log.i("tag" , btn_plus.getText().toString()+" :: "+btn_plus.getId());
+//            Log.i("tag" , btn_plus.getText().toString()+" :: "+btn_plus.getId());
+            num2 = 0;
+            set_operator(btn_plus.getText().toString().charAt(0));
         }
         else if(v.equals(btn_subtract))
         {
-            Log.i("tag" , btn_subtract.getText().toString()+" :: "+btn_subtract.getId());
+//            Log.i("tag" , btn_subtract.getText().toString()+" :: "+btn_subtract.getId());
+            num2 = 0;
+            set_operator(btn_subtract.getText().toString().charAt(0));
         }
+    }
+
+    private void set_operator(char op)
+    {
+        operator = op;
+        show_in_tv(String.valueOf(op));
+    }
+
+    private void set_number(double num)
+    {
+        if(operator == '$')
+        {
+            num1 = (num1*10)+num;
+            show_in_tv(String.valueOf(num1));
+        }
+        else
+        {
+            num2 = (num2*10)+num;
+            show_in_tv(String.valueOf(num2));
+        }
+    }
+
+    private void show_in_tv(String s)
+    {
+        tv_display.setText(s);
+    }
+
+    private void clear()
+    {
+        show_in_tv("");
+        num1=0;
+        num2=0;
+        operator='$';
+    }
+
+    private String calculate()
+    {
+        String result = "";
+
+        switch(operator)
+        {
+            case '*':
+                num1 *= num2;
+                result = String.valueOf(num1);
+                break;
+
+            case '/':
+                if(num2 == 0)
+                {
+                    result="NaN";
+                }
+                else
+                {
+                    num1 /= num2;
+                    result = String.valueOf(num1);
+                }
+                break;
+
+            case '+':
+                num1 += num2;
+                result = String.valueOf(num1);
+                break;
+
+            case '-':
+                num1 -= num2;
+                result = String.valueOf(num1);
+                break;
+        }
+
+        return result;
     }
 }
