@@ -157,6 +157,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            Log.i("tag" , btn_equal.getText().toString()+" :: "+btn_equal.getId());
             String result = calculate();
             show_in_tv(result);
+
+            num1 = Double.valueOf(result);
         }
         else if(v.equals(btn_multiplication))
         {
@@ -187,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void set_operator(char op)
     {
         operator = op;
-        show_in_tv(String.valueOf(op));
+        show_in_tv("");
     }
 
     private void set_number(double num)
